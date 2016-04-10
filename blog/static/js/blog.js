@@ -1,0 +1,1 @@
+window.onload(alert("Bienvenido/a a Django Girls Blog!!"));
