@@ -37,6 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third Party APPS
+    'crispy_forms',
+    # Mis APPS
     'blog',
 )
 
@@ -106,3 +109,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Third party APPs settings variables
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
