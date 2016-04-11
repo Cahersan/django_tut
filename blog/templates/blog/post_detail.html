@@ -2,10 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <a href="{% url 'post_edit' pk=post.pk %}">EDITAR</a>
+  <a class="btn btn-primary" href="{% url 'post_delete' pk=post.pk %}">BORRAR</a>
+  <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">EDITAR</a>
     <div class="row">
-      <p>{{ post.published_date }}</p>
       <h2>{{ post.title }}</h2>
+      <p>{{ post.published_date }}</p>
       <p>{{ post.text }}</p>
     </div>
     <div class="row">
