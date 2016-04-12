@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.join(BASE_DIR, 'django_tut')
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'django_tut.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
         'HOST': 'localhost',
-        'NAME': 'django_tut',
+        'NAME': 'django_project',
         'USER': 'carlos',
-        'PASSWORD': 'carlos',
+        'PASSWORD': 'admin',
         'ATOMIC_REQUESTS': True,
     }
 }

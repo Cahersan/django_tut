@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -9,17 +9,7 @@
       <p>{{ post.published_date }}</p>
       <p>{{ post.text }}</p>
     </div>
-    <div class="row">
-      <form method="POST" class="comment-form">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <button type="submit">Save</button>
-      </form>
-    </div>
-    <div class="row">
-      {% for comment in comments %}
-        <p>{{ comment.created_date }}</p>
-        <p>{{ comment.text }}</p>
-      {% endfor %}
-    </div>
+
+    {% include 'blog/snippets/comments.html' %}
+
 {% endblock %}

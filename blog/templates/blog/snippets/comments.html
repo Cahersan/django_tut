@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+  <form method="POST" class="comment-form">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit">Save</button>
+  </form>
+</div>
+
+<div class="row">
+  {% for comment in comments %}
+    <p>{{ comment.created_date }}</p>
+    <p>{{ comment.text }}</p>
+  {% endfor %}
+</div>
