@@ -7,6 +7,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 # Create your views here.
 
+
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {"posts": posts})
@@ -60,7 +61,7 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
 
 @login_required(login_url='login')
 def post_delete(request, pk):

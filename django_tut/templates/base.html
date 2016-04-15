@@ -8,13 +8,31 @@
              <link rel="stylesheet" href="{% static 'css/blog.css' %}">
         </head>
         <body>
-          <div class="jumbotron">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'post_list' %}">
+                  Django Blog
+                </a>
+              </div>
+              <div class="collapse navbar-collapse navbar-right">
+              {% if user.is_authenticated %}
+                <a type="button" class="btn btn-default navbar-btn" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a type="button" class="btn btn-default navbar-btn" href="{% url 'login' %}">Login</a>
+              {% endif %} 
+                 <a type="button" class="btn btn-default navbar-btn" href="{% url 'about' %}">Sobre Mí</a>
+              </div>
+            </div>
+          </nav>
+          <!--<div class="jumbotron">
             <div class="container">
               <h1>
                 Django Girls Blog
               </h1>
+
             </div>
-          </div>
+          </div>-->
           <div class="container">
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

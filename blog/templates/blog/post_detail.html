@@ -2,14 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <a class="btn btn-primary" href="{% url 'post_delete' pk=post.pk %}">BORRAR</a>
-  <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">EDITAR</a>
-    <div class="row">
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.published_date }}</p>
-      <p>{{ post.text }}</p>
-    </div>
+	{% if user == post.author or user.is_superuser %}
+	  <a class="btn btn-primary" href="{% url 'post_delete' pk=post.pk %}">BORRAR</a>
+	  <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">EDITAR</a>
+  {% endif %}
 
-    {% include 'blog/snippets/comments.html' %}
+  <div class="row">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.published_date }}</p>
+    <p>{{ post.text }}</p>
+  </div>
+
+  {% include 'blog/snippets/comments.html' %}
 
 {% endblock %}
