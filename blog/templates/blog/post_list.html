@@ -2,7 +2,7 @@
 
 {% block content %}
     {% for p in posts %}
-        <div class="row miclasecss">
+        <div class="row">
         	<div class="col-md-4 col-xs-12">
             	<h2><a href="{% url 'post_detail' pk=p.pk %}">{{ p.title }}</a></h2>
             	<p>{{ p.published_date }}</p>
@@ -10,7 +10,6 @@
         	<div class="col-md-8 col-xs-12">
             	<p>{{ p.text }}</p>
         	</div>
-
         </div>
     {% endfor %}
 {% endblock %}
