@@ -32,7 +32,7 @@ class PostDetail(DetailView):
     model = Post
 
 
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title','text']
     template_name = 'blog/post_edit.html'
@@ -97,7 +97,7 @@ class PostCreate(CreateView):
 #         form = PostForm(instance=post)
 #     return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
 
-class PostEdit(UpdateView):
+class PostEdit(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'text']
     template_name = 'blog/post_edit.html'
