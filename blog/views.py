@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView, CreateView
 
 from .models import Post, Comment
@@ -29,12 +30,15 @@ class PostCreate(CreateView):
     model = Post
     fields = ['title','text']
     template_name = 'blog/post_edit.html'
-    success_url = '/'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.published_date = timezone.now()
         return super(PostCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('post_detail', kwargs={'pk': self.object.pk })
+
 
 # def post_detail(request, pk):
 #     post = get_object_or_404(Post, pk=pk)
