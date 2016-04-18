@@ -13,6 +13,12 @@ from .forms import PostForm, CommentForm
 #def post_list(request):
 #   posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
 #   return render(request, 'blog/post_list.html', {"posts": posts})
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view, login_url='login')
+
 
 class PostList(ListView):
     context_object_name = 'posts'
@@ -106,7 +112,7 @@ class PostEdit(UpdateView):
 #     post.delete()
 #     return redirect('post_list')
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
 
     def get_success_url(self):
