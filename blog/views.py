@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .forms import CommentForm
 # Create your views here.
 
 
@@ -30,6 +30,26 @@ class PostList(ListView):
 
 class PostDetail(DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter(post=self.object).order_by('created_date')
+        context['form'] = CommentForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            form = CommentForm(request.POST)
+            post = self.get_object()
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.author = request.user
+                comment.post = post
+                comment.save()
+
+                return redirect('post_detail', pk=post.pk)
+        else:
+            return redirect('login')
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
@@ -65,7 +85,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
 #     else:
 #         form = CommentForm()
 
-#     return render(request, 'blog/post_detail.html', {'post': post,
+#    return render(request, 'blog/post_detail.html', {'post': post,
 #                                                      'comments': comments,
 #                                                      'form': form }) 
 
