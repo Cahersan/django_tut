@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
-from django.utils import timezone
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .models import Post, Comment
@@ -77,13 +80,33 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse('post_list')
 
-def comment_like(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+def comment_like(request, post_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    post = get_object_or_404(Post, pk=post_pk)
     comment.like()
-    return redirect('post_detail', pk=comment.post.pk) 
 
-def comment_dislike(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+    response_data = {
+        'result':'Like was successful!',
+        'likes': comment.likes,
+        'comment_pk': comment_pk
+    }
+    return HttpResponse(
+        json.dumps(response_data),
+        content_type="application/json"
+    )
+
+def comment_dislike(request, post_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    post = get_object_or_404(Post, pk=post_pk)
     comment.dislike()
-    return redirect('post_detail', pk=comment.post.pk)
+
+    response_data = {
+        'result':'Dislike was successful!',
+        'dislikes': comment.dislikes,
+        'comment_pk': comment_pk
+    }
+    return HttpResponse(
+        json.dumps(response_data),
+        content_type="application/json"
+    )
 
