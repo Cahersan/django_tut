@@ -76,3 +76,14 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('post_list')
+
+def comment_like(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.like()
+    return redirect('post_detail', pk=comment.post.pk) 
+
+def comment_dislike(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.dislike()
+    return redirect('post_detail', pk=comment.post.pk)
+
